@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,10 +25,10 @@ public class ShopList {
     private String shopName;
 
     @Column(name = "total")
-    private BigDecimal totalPrice;
+    private Double totalPrice;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @OneToMany(mappedBy = "list", cascade = CascadeType.ALL)
     private List<Item> itens;

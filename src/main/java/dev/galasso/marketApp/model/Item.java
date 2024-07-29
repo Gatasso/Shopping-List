@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "tb_list_item")
 @Getter
@@ -21,10 +19,10 @@ public class Item {
     private Integer quantity;
 
     @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    private Double totalPrice;
 
     @Column(name = "shop_status")
-    private Boolean status;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "tb_product_id_product")
