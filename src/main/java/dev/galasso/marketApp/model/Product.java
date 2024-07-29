@@ -15,6 +15,6 @@ public class Product {
     @Column(name = "id_product")
     private Integer id;
 
-    @Column(name = "name_product", nullable = false,length = 50)
+    @Column(name = "name_product", nullable = false, length = 50)
     private String name;
 }

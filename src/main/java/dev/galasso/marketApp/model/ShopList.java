@@ -19,7 +19,7 @@ public class ShopList {
     @Column(name = "id_list")
     private Integer id;
 
-    @Column(name = "creation_date",  nullable = false)
+    @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
 
     @Column(name = "shop_name", length = 50)

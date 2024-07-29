@@ -16,6 +16,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(Product product) {
+        if (product.getName() == null || product.getName().isEmpty()) {
+            return null;
+        }
         return (repository.save(product));
     }
 
@@ -36,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return (List<Product>) repository.findAll();
     }
 
     @Override

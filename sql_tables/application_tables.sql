@@ -18,7 +18,7 @@ USE `db_listaMercado` ;
 -- Table `db_listaMercado`.`tb_product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_listaMercado`.`tb_product` (
-  `id_product` INT NOT NULL,
+  `id_product` INT NOT NULL AUTO_INCREMENT,
   `name_product` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id_product`))
 ENGINE = InnoDB;
@@ -42,9 +42,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_listaMercado`.`tb_list_item` (
   `id_item` INT NOT NULL AUTO_INCREMENT,
-  `quantity` DOUBLE NULL,
-  `total_price` DOUBLE NULL,
-  `shop_status` INT NULL,
+  `quantity` DOUBLE NOT NULL,
+  `total_price` DOUBLE NOT NULL,
+  `shop_status` INT NOT NULL,
   `tb_product_id_product` INT NOT NULL,
   `tb_list_id_list` INT NOT NULL,
   PRIMARY KEY (`id_item`),
