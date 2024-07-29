@@ -7,6 +7,8 @@ import dev.galasso.marketApp.service.ShopListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ShopListServiceImpl implements ShopListService {
 
@@ -38,5 +40,10 @@ public class ShopListServiceImpl implements ShopListService {
     @Override
     public ShopList findById(Integer id) {
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<ShopList> getAllLists() {
+        return (List<ShopList>) repository.findAll();
     }
 }
