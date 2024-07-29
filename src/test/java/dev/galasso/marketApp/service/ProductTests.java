@@ -1,59 +1,91 @@
 package dev.galasso.marketApp.service;
 
 import dev.galasso.marketApp.model.Product;
+import dev.galasso.marketApp.repository.ProductRepository;
+import dev.galasso.marketApp.service.impl.ProductServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class ProductTests {
 
-    @Autowired
-    private ProductService service;
+   @Mock
+   private ProductRepository repository;
 
-    private static Product newProduct;
-    private static Product createdProduct;
-    private static Integer idFound = 1;
-    private static Integer idNotFound = 100;
+   @InjectMocks
+   private ProductServiceImpl service;
 
-    @BeforeAll
-    public static void setup() {
-        System.out.println("Configurando parâmetros de teste");
+   private Integer existingId = 1;
+   private Integer nonExistingId = 100;
+   private String keyWord = "Pickles";
+   private Product newProduct;
+   private Product createdProduct;
+   private ArrayList<Product> productsList;
 
-        newProduct = new Product();
-        newProduct.setName("Pickles");
+   @BeforeEach
+   public void setup() throws Exception{
+      newProduct = new Product();
+      newProduct.setName("Pickles");
 
-        createdProduct = new Product();
-        createdProduct.setName("Pickles");
-        createdProduct.setId(1);
+      createdProduct = new Product();
+      createdProduct.setName("Pickles");
+      createdProduct.setId(1);
 
+      productsList = new ArrayList<Product>();
+      Product p1,p2;
+      p1 = new Product();
+      p1.setId(2);
+      p1.setName("Pickles argentino");
+      p2 = new Product();
+      p2.setId(3);
+      p2.setName("Pickles Tailandês");
+      productsList.add(p1);
+      productsList.add(p2);
 
-//        service = Mockito.mock((ProductServiceImpl.class));
-//        Mockito.when(service.createProduct(newProduct)).thenReturn(createdProduct);
-//        System.out.println("Teste 1");
-//        Mockito.when(service.alterProduct(createdProduct)).thenReturn(createdProduct);
-//        System.out.println("Teste 2");
-//        Mockito.when(service.getAllProducts()).thenReturn(new ArrayList<Product>());
-//        System.out.println("Teste 3");
-//        Mockito.when(service.getProductByKeyWord("palavra")).thenReturn(new ArrayList<Product>());
-//        System.out.println("Teste 4");
-//        Mockito.when(service.findById(idFound)).thenReturn(createdProduct);
-//        System.out.println("Teste 5");
-//        Mockito.when(service.findById(idNotFound)).thenReturn(null);
-//        System.out.println("Teste 6");
-    }
+      Mockito.when(repository.save(newProduct)).thenReturn(createdProduct);
+      Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(new Product()));
+      Mockito.when(repository.findById(nonExistingId)).thenReturn(Optional.ofNullable(null));
+      Mockito.when(repository.findAllByNameContaining("Pepino")).thenReturn(new ArrayList<Product>());
+      Mockito.when(repository.findAllByNameContaining(keyWord)).thenReturn(productsList);
+   }
 
-    @Test
-    public void shouldStoreProduct(){
-        System.out.println("Dentro do método shouldStoreProduct");
-        assertNotNull(service.createProduct(newProduct));
-    }
+   @Test
+   public void shouldRegisterProduct(){
+      assertEquals(service.createProduct(newProduct), createdProduct);
+   }
+
+   @Test
+   public void shouldReturnById(){
+      assertNotNull(service.findById(existingId));
+   }
+
+   @Test
+   public void shouldNotReturnById(){
+      assertNull(service.findById(nonExistingId));
+   }
+
+   @Test
+   public void shouldReturnListByKeyWord(){
+      assertFalse(service.getProductByKeyWord(keyWord).isEmpty());
+   }
+
+   @Test
+   public void shouldReturnEmptyList(){
+       assertTrue(service.getProductByKeyWord("B").isEmpty());
+   }
 }

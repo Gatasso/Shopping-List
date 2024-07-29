@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(Integer id) {
-        return null;
+        return repository.findById(id).orElse(null);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductByKeyWord(String keyWord) {
-        return null;
+        return repository.findAllByNameContaining(keyWord);
     }
 }
