@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lists")
+@CrossOrigin("*")
 public class ShopListController {
 
     @Autowired
