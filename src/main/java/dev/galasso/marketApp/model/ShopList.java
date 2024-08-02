@@ -1,5 +1,6 @@
 package dev.galasso.marketApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class ShopList {
     private Integer status;
 
     @OneToMany(mappedBy = "list", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("list")
     private List<Item> itens;
 
 }
