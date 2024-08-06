@@ -26,7 +26,7 @@ public class ItemController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteItemFromList(@PathVariable Integer id) {
         service.removeItemFromList(id);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.status(200).build();
     }
 
     @PutMapping("/{id}")
